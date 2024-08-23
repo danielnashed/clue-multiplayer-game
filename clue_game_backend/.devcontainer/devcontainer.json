@@ -1,0 +1,62 @@
+{
+"name": "Clue Game Backend",
+"context": "..",
+"dockerFile": "../Dockerfile",
+"forwardPorts": [
+    8000
+],
+"runArgs": [
+    "--network=host",
+    "--name=clue-game-api-dev-container",
+    "--env-file",
+    ".devcontainer/devcontainer.env"
+],
+"mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+],
+"extensions": [
+    "aaron-bond.better-comments",
+    "augustocdias.tasks-shell-input", // Required to extend inputs property so that it supports the command property, some tasks require commands like list all migrations by app.
+    // "batisteo.vscode-django",
+    "bierner.markdown-shiki", // Highlights code in markdown preview to match the colors in text editor
+    "christian-kohler.path-intellisense", // Autocompletes filenames
+    "clemenspeters.format-json", // Formats JSON file contents
+    "cweijan.vscode-database-client2", // Connect to databases from VSCode
+    // "donjayamanne.python-environment-manager",
+    "eamodio.gitlens", // Tracks git changes
+    // "ecmel.vscode-html-css",
+    "ericsia.pythonsnippets3", // Auto suggestion for Python3 syntax
+    // "njqdev.vscode-python-typehint", // Is this really needed since I already have pythonsnippets3
+    "formulahendry.auto-rename-tag", // Auto updates closing tag of the tag being editted
+    "formulahendry.code-runner", // Ability to run highlighted code
+    // "github.remotehub",
+    "grapecity.gc-excelviewer", // Edit Excel spreadsheets and CSV files in Visual Studio Code
+    "gruntfuggly.todo-tree", // Easily manage TODOs
+    "gurumukhi.selected-lines-count",
+    // "hbenl.vscode-test-explorer",
+    "johnpapa.vscode-peacock", // Change color of VSCode window
+    // "littlefoxteam.vscode-python-test-adapter",
+    "mechatroner.rainbow-csv", // Auto, syntax color highlighter for csv files
+    "mhutchie.git-graph",
+    "mikestead.dotenv", // .env syntax color highlighter
+    "ms-azuretools.vscode-docker",
+    "ms-python.black-formatter", // Auto formats Python code to meet PEP 8 standards
+    "ms-python.flake8", // A line wrapper that covers style, syntax, and complexity
+    // "ms-python.isort",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode.cpptools",
+    "ms-vscode.remote-repositories",
+    "ms-vscode.test-adapter-converter",
+    "ms-vsliveshare.vsliveshare", // Share screen
+    // "naumovs.color-highlight", // css/html syntax color highlighter
+    "njpwerner.autodocstring",
+    "oderwat.indent-rainbow",
+    "redhat.vscode-yaml",
+    // "thiscodeworks.savecode",
+    "visualstudioexptteam.intellicode-api-usage-examples", // Browse code that's similar to yours
+    "visualstudioexptteam.vscodeintellicode",
+    "yzhang.markdown-all-in-one"
+]
+}

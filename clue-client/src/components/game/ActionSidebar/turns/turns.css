@@ -1,0 +1,19 @@
+.turn-tab {
+   background-color: #737373;
+   bottom: 0;
+   width: 97%;
+   border-radius: .5em;
+   margin-right: auto;
+   margin-left: auto;
+   /* height: 26%; */
+   padding-bottom: 10%;
+   font-family: Jockey One;
+   color: white;
+   text-align: center;
+   font-size: 2em;
+   box-shadow: 2px 4px 6px 1px rgba(0 0 0 0.7) ;
+}
+
+.your-turn {
+
+}

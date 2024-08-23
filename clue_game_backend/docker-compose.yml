@@ -1,0 +1,47 @@
+# See usages of this compose file and its commands in the README.md file
+version: '3.9'
+
+volumes:
+  local_pg_data:
+    driver: local
+  local_es_data:
+    driver: local
+
+services:
+
+  clue-game-db:
+    profiles:
+      - clue-game  # must pass --profile usaspending to docker-compose for this to come up, or run a service with one of these other profiles
+    image: postgres:13.8-alpine
+    container_name: clue-game-db
+    volumes:
+      - type: volume
+        source: local_pg_data
+        target: /var/lib/postgresql/data
+    ports:
+      - ${CLUE_GAME_DB_PORT:-5432}:5432
+    environment:
+      POSTGRES_HOST: ${CLUE_GAME_DB_HOST}
+      POSTGRES_USER: ${CLUE_GAME_DB_USER}
+      POSTGRES_PASSWORD: ${CLUE_GAME_DB_PASSWORD}
+      POSTGRES_DB: ${CLUE_GAME_DB_NAME}
+
+  clue-game-api:
+    profiles:
+      - clue-game  # must pass --profile usaspending to docker-compose for this to come up, or run a service with one of these other profiles
+    image: clue-game-api-backend  # when an image by this name is not found in the local repo, and it is forced to build, it will use this as the tag
+    build: .
+    container_name: clue-game-api
+    volumes:
+      - .:/dockermount
+    ports:
+      - 8000:8000
+    depends_on:
+      - clue-game-db
+    restart: on-failure:3 # 3 max attempt, and then it will stop restarting
+    # Must wait on postgres db to be up (~9s)
+    command: /bin/sh -c "sleep 9s; python3 -u manage.py runserver --verbosity 2 0.0.0.0:8000"
+    environment:
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      DB_SOURCE: postgres://${CLUE_GAME_DB_USER}:${CLUE_GAME_DB_PASSWORD}@${CLUE_GAME_DB_HOST}:${CLUE_GAME_DB_PORT}/${CLUE_GAME_DB_NAME}
+      DB_R1: postgres://${CLUE_GAME_DB_USER}:${CLUE_GAME_DB_PASSWORD}@${CLUE_GAME_DB_HOST}:${CLUE_GAME_DB_PORT}/${CLUE_GAME_DB_NAME}
